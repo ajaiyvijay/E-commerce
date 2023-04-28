@@ -1,0 +1,24 @@
+<html>
+  <body>
+    <h1>CSRF Test Form</h1>
+    <form method="POST" action="http://example.com/vulnerable-script.php">
+      <input type="hidden" name="csrf_token" id="csrf_token" value="">
+      <input type="text" name="u_name" placeholder="Username">
+      <input type="password" name="pass" placeholder="Password">
+      <button type="submit">Submit</button>
+    </form>
+    <script>
+      // Generate a random CSRF token
+      var csrf_token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      
+      // Set the CSRF token in the hidden input field
+      document.getElementById("csrf_token").value = csrf_token;
+      
+      // Listen for the submit event of the form
+      document.querySelector("form").addEventListener("submit", function(event) {
+        // Set the CSRF token in the hidden input field before submitting the form
+        document.getElementById("csrf_token").value = csrf_token;
+      });
+    </script>
+  </body>
+</html>
